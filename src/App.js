@@ -4,6 +4,7 @@ import Navbar from './components/nav';
 import Home from './components/glowna';
 import CurrencyCalculator from './components/waluty';
 import CryptoCalculator from './components/krypto';
+import './style.css';
 
 const App = () => (
   <Router>
