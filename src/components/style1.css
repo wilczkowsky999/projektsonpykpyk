@@ -1,0 +1,99 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+
+  h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 20px;
+    color: #4CAF50;
+  }
+  
+
+  section {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+
+  input[type="number"],
+  select {
+    padding: 10px;
+    width: 200px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+
+  .result {
+    font-size: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .error {
+    color: red;
+    font-size: 16px;
+  }
+
+  a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+  }
+  
+  footer p {
+    margin: 0;
+  }
+  

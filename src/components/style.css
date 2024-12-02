@@ -1,117 +1,146 @@
-/* Ustawienia globalne */
+
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f3e7; /* Jasny beżowy odcień */
-    color: #5a4636; /* Ciemniejszy brąz dla tekstu */
-  }
-  
-  h1, h2, h3 {
-    color: #5a4636;
-  }
-  
-  /* Nawigacja */
-  nav {
-    background-color: #d4c3a3; /* Jasny brąz */
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  nav ul li {
-    margin: 0 15px;
-  }
-  
-  nav ul li a {
-    text-decoration: none;
-    color: #5a4636;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  nav ul li a:hover {
-    color: #8a6a4a; /* Ciepły brąz */
-  }
-  
-  /* Układ strony */
-  .container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fffdf6; /* Bardzo jasny odcień brązu */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Formularze i przyciski */
-  input[type="number"], input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #c2b08c; /* Jasny brązowy odcień */
-    border-radius: 5px;
-    background-color: #faf7ef; /* Delikatny beż */
-    color: #5a4636;
-  }
-  
-  input[type="number"]:focus, input[type="text"]:focus {
-    outline: none;
-    border-color: #8a6a4a;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #d4c3a3;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #b59a78; /* Ciemniejszy odcień brązu */
-  }
-  
-  /* Tabele i listy */
-  table {
+  font-family: 'Arial', sans-serif;
+  background-color: #fffff0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.home-container {
+  width: 80%;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+
+.clock {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.clock h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.clock p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.loading {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #4caf50;
+}
+
+.error {
+  font-size: 1.2rem;
+  text-align: center;
+  color: red;
+}
+
+
+.rates-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.currency-rates, .crypto-rates {
+  flex: 1;
+  background-color: #fffff0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.currency-rates h2, .crypto-rates h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.currency-rates p, .crypto-rates p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+
+.fetch-time {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.fetch-time h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.fetch-time p {
+  font-size: 1rem;
+  color: #555;
+}
+
+
+.ok {
+  display: flex;
+  justify-content: center;  
+  gap: 10px;  
+  margin-top: 30px;
+  padding: 0;
+  width: 100%;  
+  justify-content: space-evenly;  
+}
+.ok .nav-link {
+  font-size: 0.8rem;  
+  padding: 8px 16px;  
+  border: 2px solid #000000; 
+  border-radius: 0; 
+  background-color: #ffffff; 
+  color: #000000;
+  font-weight: bold;
+  text-decoration: none; /* Usunięcie podkreślenia */
+  transition: all 0.3s ease; /* Płynne przejście na hover */
+}
+
+.ok .nav-link:hover {
+  background-color: #333333; /* Tło zmienia się na ciemne */
+  color: #ffffff; /* Kolor tekstu zmienia się na biały */
+  border-color: #555555; /* Zmiana koloru obramowania na ciemniejszy */
+}
+
+
+
+  .currency-rates, .crypto-rates {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    margin-bottom: 20px;
   }
-  
-  table th, table td {
-    border: 1px solid #d4c3a3;
-    padding: 10px;
-    text-align: left;
+
+  .nav {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  table th {
-    background-color: #e8d9c4; /* Bardzo jasny brąz */
+
+  .ok .nav-link {
+    margin-bottom: 10px; /* Dodatkowa przestrzeń między linkami */
   }
-  
-  table tr:nth-child(even) {
-    background-color: #f9f6ed; /* Jasny odcień tła */
-  }
-  
-  /* Responsywność */
-  @media (max-width: 768px) {
-    nav ul {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .container {
-      padding: 15px;
-    }
-  }
-  
+
