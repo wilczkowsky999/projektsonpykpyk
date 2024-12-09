@@ -16,6 +16,12 @@ const App = () => {
       <Route path="/waluty" element={<CurrencyCalculator />} />
       <Route path="/krypto" element={<CryptoCalculator />} />
     </Routes>
+    <footer style={{ marginTop: '20px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
+        <p>&copy; 2024 kcpr999. Wszystkie prawa zastrzeżone.</p>
+        <p className="info">
+        Prosimy nie nadużywać resetowania kursów, ponieważ strona korzysta z API, które przyjmuje określoną liczbę zapytań.
+      </p>
+    </footer>
 </BrowserRouter>
     )
 

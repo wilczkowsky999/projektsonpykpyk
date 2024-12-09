@@ -1,50 +1,56 @@
 import React, { useEffect, useState } from 'react';
 
-
 const Home = () => {
   const [exchangeRates, setExchangeRates] = useState(null);
   const [cryptoRates, setCryptoRates] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingCurrency, setLoadingCurrency] = useState(true);
+  const [loadingCrypto, setLoadingCrypto] = useState(true);
   const [error, setError] = useState(null);
   const [currentTime, setCurrentTime] = useState(new Date()); 
   const [fetchTime, setFetchTime] = useState(null); 
 
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+  const fetchData = () => {
+    setLoadingCurrency(true);
+    setLoadingCrypto(true);
+    setExchangeRates(null);
+    setCryptoRates(null);
+    setError(null);
 
-    
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    
     fetch('https://api.exchangerate-api.com/v4/latest/USD')
       .then(response => response.json())
       .then(data => {
         setExchangeRates(data);
-        setLoading(false);
-        setFetchTime(new Date()); 
+        setLoadingCurrency(false);
+        setFetchTime(new Date());
       })
       .catch(err => {
+        console.error('Error fetching exchange rates:', err);
         setError('Nie udało się załadować kursów walut');
-        setLoading(false);
+        setLoadingCurrency(false);
       });
 
-    
     fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,cardano,litecoin,dogecoin&vs_currencies=usd')
       .then(response => response.json())
       .then(data => {
         setCryptoRates(data);
-        setLoading(false);
-        setFetchTime(new Date()); 
+        setLoadingCrypto(false);
+        setFetchTime(new Date());
       })
       .catch(err => {
+        console.error('Error fetching crypto rates:', err);
         setError('Nie udało się załadować kursów kryptowalut');
-        setLoading(false);
+        setLoadingCrypto(false);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const formatDateTime = (date) => {
@@ -62,17 +68,17 @@ const Home = () => {
     <div className="home-container">
       <h1>Aktualne Kursy Walut i Kryptowalut</h1>
 
-      
       <div className="clock">
         <h2>Bieżący Czas</h2>
         <p>{formatDateTime(currentTime)}</p>
       </div>
 
-      {loading && <p className="loading">Ładowanie kursów...</p>}
-
+      {loadingCurrency && <p className="loading">Ładowanie kursów walut...</p>}
+      {loadingCrypto && <p className="loading">Ładowanie kursów kryptowalut...</p>}
+      
       {error && <p className="error">{error}</p>}
 
-      {!loading && !error && (
+      {!loadingCurrency && !loadingCrypto && !error && (
         <div className="rates-container">
           {exchangeRates && (
             <div className="currency-rates">
@@ -98,16 +104,17 @@ const Home = () => {
         </div>
       )}
 
-      
-      {fetchTime && (
+      {fetchTime && !loadingCurrency && !loadingCrypto && (
         <div className="fetch-time">
           <h2>Czas pobrania kursów</h2>
           <p>Ostatnia aktualizacja: {formatDateTime(fetchTime)}</p>
         </div>
       )}
-      <footer style={{ marginTop: '20px', textAlign: 'center' }}>
-        <p>&copy; 2024 kcpr999. Wszystkie prawa zastrzeżone.</p>
-      </footer>
+
+      <button onClick={fetchData} className="reset-button">
+        Pobierz Najnowsze Kursy
+      </button>
+
     </div>
   );
 };

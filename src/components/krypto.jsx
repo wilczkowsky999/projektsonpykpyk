@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 const CryptoCurrencyCalculator = () => {
   const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('USD');
@@ -21,11 +20,9 @@ const CryptoCurrencyCalculator = () => {
       fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,cardano,dogecoin&vs_currencies=usd')
         .then(response => response.json())
         .then(data => setCryptoRates(data))
-        .catch(err => setError('Nie udało się załadować kursów kryptowalut.')),
-    ])
-    .finally(() => setLoading(false));
+        .catch(err => setError('Nie udało się załadować kursów kryptowalut.'))
+    ]).finally(() => setLoading(false));
   }, []);
-
 
   useEffect(() => {
     if (amount && fromCurrency && toCrypto && currencyRates && cryptoRates) {
@@ -34,52 +31,25 @@ const CryptoCurrencyCalculator = () => {
         return;
       }
 
-      
       const fromRate = currencyRates.rates[fromCurrency];
-      if (fromRate) {
-        const amountInUSD = amount / fromRate;  
+      const toRate = cryptoRates[toCrypto]?.usd;
 
-        
-        const toRate = cryptoRates[toCrypto]?.usd; 
-        if (toRate) {
-          const convertedAmount = amountInUSD / toRate;  
-          setResult(convertedAmount);
-        } else {
-          setError('Nieprawidłowa kryptowaluta');
-        }
+      if (fromRate && toRate) {
+        const amountInUSD = amount / fromRate;
+        const convertedAmount = amountInUSD / toRate;
+        setResult(convertedAmount);
       } else {
-        setError('Nieprawidłowa waluta źródłowa');
+        setError('Nieprawidłowa waluta lub kryptowaluta');
       }
     }
   }, [amount, fromCurrency, toCrypto, currencyRates, cryptoRates]);
 
-  
   const generateBybitLink = () => {
     const fromSymbol = toCrypto.toUpperCase();
     const toSymbol = 'USDT';
     return `https://www.bybit.com/trade/${fromSymbol}-${toSymbol}`;
   };
 
-  
-  const resetForm = () => {
-    setAmount('');
-    setResult(null);
-    setError(null);
-  };
-
-
-  const handleCurrencyChange = (e) => {
-    setFromCurrency(e.target.value);
-    resetForm();
-  };
-
- 
-  const handleCryptoChange = (e) => {
-    setToCrypto(e.target.value);
-    resetForm();
-  };
-
-  
   const handleAmountChange = (e) => {
     const value = e.target.value;
     if (value >= 0) {
@@ -90,10 +60,26 @@ const CryptoCurrencyCalculator = () => {
     }
   };
 
- 
+  const handleCurrencyChange = (e) => {
+    setFromCurrency(e.target.value);
+  };
+
+  const handleCryptoChange = (e) => {
+    setToCrypto(e.target.value);
+  };
+
+  const handleClear = () => {
+    setAmount('');
+    setFromCurrency('USD');
+    setToCrypto('bitcoin');
+    setResult(null);
+    setError(null);
+  };
+
+  const isButtonVisible = amount && fromCurrency && toCrypto && !loading && result !== null;
 
   return (
-    <div>
+    <div className='home-container'>
       <h1>Kalkulator Kryptowalut</h1>
 
       <div>
@@ -103,14 +89,12 @@ const CryptoCurrencyCalculator = () => {
           value={amount}
           onChange={handleAmountChange}
         />
-        <span> {fromCurrency}</span> {}
+        {/* Render currency symbol only if amount is entered */}
+        {amount && <span>{fromCurrency}</span>}
       </div>
 
       <div>
-        <select
-          value={fromCurrency}
-          onChange={handleCurrencyChange}
-        >
+        <select value={fromCurrency} onChange={handleCurrencyChange}>
           {currencyRates && Object.keys(currencyRates.rates).map((currencyCode) => (
             <option key={currencyCode} value={currencyCode}>
               {currencyCode}
@@ -120,10 +104,7 @@ const CryptoCurrencyCalculator = () => {
       </div>
 
       <div>
-        <select
-          value={toCrypto}
-          onChange={handleCryptoChange}
-        >
+        <select value={toCrypto} onChange={handleCryptoChange}>
           {cryptoRates && Object.keys(cryptoRates).map((cryptoCode) => (
             <option key={cryptoCode} value={cryptoCode}>
               {cryptoCode.charAt(0).toUpperCase() + cryptoCode.slice(1)}
@@ -135,28 +116,22 @@ const CryptoCurrencyCalculator = () => {
       {loading && <p>Ładowanie kursów...</p>}
 
       {result !== null && (
-        <p>Możesz kupić: {result.toFixed(6)} {toCrypto.toUpperCase()}</p>
+        <p>{amount} {fromCurrency} = {result.toFixed(6)} {toCrypto.toUpperCase()}</p>
       )}
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {result !== null && (
+      {isButtonVisible && (
         <div>
-          <button
-            onClick={() => window.open(generateBybitLink(), '_blank')}
-            style={{ padding: '10px', marginTop: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}
-          >
+          <button onClick={() => window.open(generateBybitLink(), '_blank')}>
             Wymień {toCrypto.toUpperCase()} na Bybit
           </button>
         </div>
       )}
 
-      
-    
-
-      <footer style={{ marginTop: '20px', textAlign: 'center' }}>
-        <p>&copy; 2024 kcpr999. Wszystkie prawa zastrzeżone.</p>
-      </footer>
+      <div>
+        <button onClick={handleClear}>Wyczyść</button>
+      </div>
     </div>
   );
 };
